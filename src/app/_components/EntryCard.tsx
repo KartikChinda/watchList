@@ -1,6 +1,6 @@
 "use client";
 import React from 'react';
-import { useSession } from 'next-auth/react';
+
 import { api } from "~/trpc/react"
 
 
@@ -10,10 +10,9 @@ interface Movie {
     details: string,
     createdAt: Date,
     done: boolean,
-    setDeleteClicked: (prev: any) => {}
 }
 
-const EntryCard = ({ id, title, details, createdAt, done, setDeleteClicked }: Movie) => {
+const EntryCard = ({ id, title, details, createdAt, done }: Movie) => {
 
     const dateToShow = new Date(createdAt).toLocaleDateString();
     const ctx = api.useUtils();

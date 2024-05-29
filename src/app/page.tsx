@@ -3,7 +3,7 @@ import { useSession } from "next-auth/react";
 import { api } from "~/trpc/react"
 import Link from "next/link";
 import EntryCard from "./_components/EntryCard";
-import { useEffect, useState } from "react";
+
 
 interface Movie {
   id: string;
@@ -20,24 +20,13 @@ const Home = () => {
   // console.log("Movies: ", data);
 
   const { data: session } = useSession();
-  // const [movies, setmovies] = useState<Movie[] | undefined>([])
+
 
 
 
 
   // ?? -> nullish operator, essentially the || operator, but it also follows values when the first value is 0. It works like value 1 ?? value 2, if value 1 is true, then val1, otherwise val2.
   const { data, isLoading: moviesLoading } = api.movie.getMoviesByUser.useQuery(session?.user.id ?? "");
-
-
-
-  // useEffect(() => {
-
-
-
-
-  // }, [deleteClicked])
-
-
 
 
 
