@@ -51,7 +51,7 @@ export const movieRouter = createTRPCRouter({
     }),
 
     setDone: publicProcedure.input(setDoneInput).mutation(async ({ ctx, input }) => {
-        await ctx.db.movie.update({
+        return await ctx.db.movie.update({
             where: {
                 id: input.id
             }, data: {
