@@ -14,16 +14,17 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-model Post {
-    id        Int      @id @default(autoincrement())
-    name      String
+model Movie {
+    id        String   @id @default(cuid())
+    title     String
+    details   String
+    done      Boolean
     createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
 
-    createdBy   User   @relation(fields: [createdById], references: [id])
-    createdById String
+    userId String
+    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-    @@index([name])
+    @@index([userId])
 }
 
 // Necessary for Next auth
@@ -62,7 +63,7 @@ model User {
     image         String?
     accounts      Account[]
     sessions      Session[]
-    posts         Post[]
+    Movie         Movie[]
 }
 
 model VerificationToken {
