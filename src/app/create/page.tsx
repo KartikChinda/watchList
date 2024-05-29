@@ -3,29 +3,51 @@ import React from 'react'
 import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { api } from '~/trpc/react';
 
 const CreateMovie = () => {
-    const { data: session } = useSession();
+
     const [inputmovie, setinputmovie] = useState({
         title: "",
         details: "",
     })
-
     const router = useRouter();
 
-    const handlePostSubmit = async (e: any) => {
+    // setting up the submit 
+    const { data: session } = useSession();
+    const ctx = api.useUtils();
 
+    const { mutate } = api.movie.createMovie.useMutation({
+        onSuccess: () => {
+            console.log("Success!")
+            setinputmovie({
+                title: "",
+                details: "",
+            })
+            void ctx.movie.getMoviesByUser.invalidate();
+            router.push("/")
+        }
+    })
+
+    const handlePostSubmit = async (e: any) => {
+        e.preventDefault();
+        mutate({
+            userId: session?.user.id ?? "",
+            title: inputmovie.title,
+            details: inputmovie.details,
+            done: false,
+        })
     }
 
 
 
 
     const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-
+        setinputmovie({ ...inputmovie, title: e.target.value })
     }
 
     const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-
+        setinputmovie({ ...inputmovie, details: e.target.value })
     }
 
     const handleCancel = () => {
@@ -34,7 +56,7 @@ const CreateMovie = () => {
 
 
     return (
-        <section className='md:mt-20 flex justify-center items-center w-[110%]'>
+        <section className='md:mt-20 flex justify-center items-center w-[110%] mb-5 '>
 
             <div className='flex-col mx-auto md:w-[80%]'>
 
@@ -42,13 +64,13 @@ const CreateMovie = () => {
 
                     <label htmlFor="title" className="flex flex-col font-semibold gap-1" >
                         Title
-                        <input id="title" placeholder="What are you watching next?" className="rounded-md p-2 font-normal border-2 border-palette-4" onChange={(e) => handleTitleChange(e)} value={""} />
+                        <input id="title" placeholder="What are you watching next?" className="rounded-md p-2 font-normal border-2 border-palette-4" onChange={(e) => handleTitleChange(e)} value={inputmovie.title} />
 
                     </label>
 
                     <label htmlFor="content" className="flex flex-col font-semibold gap-1" >
                         Description
-                        <textarea id="content" placeholder="Add more information" className=" h-[200px] rounded-md p-2 font-normal border-2 border-palette-4" onChange={(e) => handleContentChange(e)} value={""} />
+                        <textarea id="content" placeholder="Add more information" className=" h-[200px] rounded-md p-2 font-normal border-2 border-palette-4" onChange={(e) => handleContentChange(e)} value={inputmovie.details} />
 
                     </label>
 
