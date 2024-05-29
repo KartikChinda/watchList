@@ -22,7 +22,6 @@ const Home = () => {
   const { data: session } = useSession();
   // const [movies, setmovies] = useState<Movie[] | undefined>([])
 
-  const [deleteClicked, setDeleteClicked] = useState(false);
 
 
 
@@ -55,7 +54,7 @@ const Home = () => {
         {data?.map((movie) => {
           return (
             <div key={movie.id} className="mt-4">
-              <EntryCard id={movie.id} title={movie.title} details={movie.details} createdAt={movie.createdAt} done={movie.done} setDeleteClicked={() => setDeleteClicked} />
+              <EntryCard id={movie.id} title={movie.title} details={movie.details} createdAt={movie.createdAt} done={movie.done} />
             </div>
           )
         })}
