@@ -29,7 +29,7 @@ const CreateMovie = () => {
         }
     })
 
-    const handlePostSubmit = async (e: any) => {
+    const handlePostSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         mutate({
             userId: session?.user.id ?? "",
