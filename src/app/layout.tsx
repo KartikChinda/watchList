@@ -20,7 +20,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${GeistSans.variable}`}>
-      <body>
+      <body className=" bg-palette-4">
         <TRPCReactProvider>
           <NextAuthProvider>
             <Header />
