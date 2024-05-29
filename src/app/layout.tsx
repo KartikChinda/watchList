@@ -4,6 +4,7 @@ import { GeistSans } from "geist/font/sans";
 
 import { TRPCReactProvider } from "~/trpc/react";
 import { NextAuthProvider } from "~/providers/nextAuth";
+import { Header } from "./_components/header";
 
 
 export const metadata = {
@@ -22,6 +23,7 @@ export default function RootLayout({
       <body>
         <TRPCReactProvider>
           <NextAuthProvider>
+            <Header />
             {children}
           </NextAuthProvider>
 
