@@ -39,7 +39,9 @@ const Home = () => {
       <div className=" w-[90%] px-4 py-2 bg-palette-4 m-2 rounded-lg pb-6">
         <h2 className=' font-serif text-palette-1 text-5xl mt-10'>
           Your Entries.
+
         </h2>
+        {session === null ? <p className="text-lg m-2 font-light">You have no entries to display. Sign in to create an entry.</p> : ""}
         {data?.map((movie) => {
           return (
             <div key={movie.id} className="mt-4">

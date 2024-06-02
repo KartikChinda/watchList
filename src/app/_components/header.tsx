@@ -1,5 +1,6 @@
 "use client";
 import { signIn, signOut, useSession } from "next-auth/react";
+import Link from "next/link";
 
 
 export const Header = () => {
@@ -8,7 +9,7 @@ export const Header = () => {
     return (
         <div className="flex flex-col justify-center items-center px-2 py-4 ">
             <div className='m-4 p-4 bg-palette-1 w-[70%] rounded-xl text-center text-5xl font-black text-palette-3 border-2 border-palette-1 hover:border-palette-2 hover:bg-palette-3 hover:text-palette-1 duration-150 mt-10 mb-5'>
-                My Watchlist
+                <Link href="/">My Watchlist</Link>
             </div>
             <div className=" ">
                 {session?.user ? (
